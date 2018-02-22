@@ -1,0 +1,32 @@
+@import "../css/base.scss";
+
+.zmiti-choose-main-ui {
+	z-index: 105;
+
+	.zmiti-vote {
+		width: 9rem;
+		margin: .5rem auto;
+	}
+
+	.zmiti-words-list {
+		width: 10rem;
+		height: 9rem;
+		border: 1px solid red;
+		box-sizing: border-box;
+	}
+
+	.zmiti-back {
+		width: 3rem;
+		height: 1rem;
+		line-height: 1rem;
+		background: #1a8cdc;
+		color: #fff;
+		text-align: center;
+		@include br(4px);
+		font-size: .45rem;
+		@include pos(a);
+		bottom: 1.2rem;
+		left: 3.5rem;
+	}
+
+}

@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Index from './components/index/index';
-import Content from './components/content/content';
-import Upload from './components/upload/upload';
-import Share from './components/share/index';
+import Choose from './components/choose/index';
+import Form from './components/form/index';
+import List from './components/list/index';
 import Obserable from './components/lib/obserable';
 import imgs from './components/lib/assets'
 import zmitiUtil from './components/lib/util.js'
@@ -24,32 +24,36 @@ new Vue({
 		viewH: document.documentElement.clientHeight,
 		isShare: false,
 		show: false,
-		posData: window.posData,
 		username: '',
 		wish: '',
 		width: 0,
-		loaded: false
+		loaded: false,
+		playStyle: {
+
+		}
 	},
 	el: '#app',
 	template: `<div>
 		<Index v-if='!isShare && show'  :obserable='obserable'></Index>
-		<Content v-if='!isShare && show' :obserable='obserable' :posData='posData[0]'></Content>
-		<Upload  v-if='!isShare && show' :obserable='obserable'></Upload>
-		<Share :obserable='obserable'></Share>
-		<audio ref='audio' src='./assets/music/bg.mp3' autoplay loop></audio>
-		<div  @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}'>
+		<Choose v-if='!isShare && show'  :obserable='obserable'></Choose>
+		<List v-if='!isShare && show'  :obserable='obserable'></List>
+		<Form v-if='!isShare && show'  :obserable='obserable'></Form>
+		<audio ref='audio' src='./assets/music/bg.mp3'  loop></audio>
+		<div  @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}' :style="playStyle">
 			<img  :src='imgs.play'/>
 		</div>
-		<div v-if='!loaded' :style='{background:"#fff url("+imgs.shareBg+") no-repeat center ",backgroundSize:"cover"}' class='zmiti-loading lt-full'>
-			<div class='zmiti-loading-ui'>
-				<div class='zmiti-loading-bar' >
-					<div :style="{width:width+'%'}">
-						<img :src='imgs.pos' />
+		<!--
+			<div v-if='!loaded' :style='{background:"#fff url("+imgs.shareBg+") no-repeat center ",backgroundSize:"cover"}' class='zmiti-loading lt-full'>
+				<div class='zmiti-loading-ui'>
+					<div class='zmiti-loading-bar' >
+						<div :style="{width:width+'%'}">
+							<img :src='imgs.pos' />
+						</div>
 					</div>
+					<div class='zmiti-progress'>{{width}}%</div>
 				</div>
-				<div class='zmiti-progress'>{{width}}%</div>
 			</div>
-		</div>
+		-->
 	</div>`,
 	methods: {
 
@@ -87,16 +91,16 @@ new Vue({
 				type: 'post',
 				data: {
 					//isrand: 0,
-					customid: 38
+					customid: 39
 				}
 			});
 		}
 	},
 	components: {
 		Index,
-		Content,
-		Upload,
-		Share
+		Choose,
+		Form,
+		List
 	},
 	mounted() {
 
@@ -115,7 +119,7 @@ new Vue({
 
 
 
-		this.loading(arr, (s) => {
+		/*this.loading(arr, (s) => {
 			this.width = s * 100 | 0;
 
 		}, () => {
@@ -124,17 +128,27 @@ new Vue({
 			obserable.trigger({
 				type: 'titleShow'
 			})
-		})
+		})*/
 
 		obserable.on('showShare', () => {
 			this.showMask = true;
 		})
+
+
+		obserable.on('setPlay', (data) => {
+
+			this.playStyle = data;
+
+		});
 
 		$(this.$refs['audio']).on('play', () => {
 			this.rotate = true;
 		}).on('pause', () => {
 			this.rotate = false;
 		});
+
+
+		return;
 
 
 		this.$refs['audio'].volume = .3;
