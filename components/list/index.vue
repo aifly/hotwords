@@ -6,6 +6,7 @@
 
 		<div class="zmiti-words-list">
 			
+			<div class="zmiti-word-item" v-for='word in words' :style='word.style'></div>
 
 		</div>
 
@@ -24,26 +25,46 @@
 				play:false,
 				index:-1,
 				show:true,
-				words:[],
-				chooseWords:[]
+				words:[
+					{
+						style:{
+							width:'3rem',
+							height:'3rem',
+							left:'4.5rem',
+							top:'4rem',
+							background:'#63b7f5'
+						}
+						
+					},{
+						style:{
+							width:'2.6rem',
+							height:'2.6rem',
+							left:'1.5rem',
+							top:'1rem',
+							background:'#f05553'
+						}
+					},{
+						style:{
+							width:'2.4rem',
+							height:'2.4rem',
+							left:'1.5rem',
+							top:'4rem',
+							background:'#ffa509'
+						}
+					},{
+						style:{
+							width:'2rem',
+							height:'2rem',
+							left:'4rem',
+							top:'1rem',
+							background:'#36c15a'
+						}
+					}
+				],
 			}
 		},
 		methods:{
-			choose(index,word){
-				this.chooseWords.push({
-					index,
-					hotword:word.hotword,
-					hotwordid:word.hotwordid
-
-				});
-				//console.log(JSON.stringify(this.chooseWords))
-
-				this.words.splice(index,1);
-			},
-			unchoose(index,word){
-				this.chooseWords.splice(index,1);
-				this.words.splice(word.index,0,word);
-			}
+			
 		},
 		components:{
 		},
@@ -57,10 +78,9 @@
 					top:'.5rem !important'
 				}
 			});
-
 			setTimeout(()=>{
 
-				this.words = obserable.trigger({type:'getWords'})
+				//this.words = obserable.trigger({type:'getWords'})
 
 			},400)
 		}

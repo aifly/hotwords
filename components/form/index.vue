@@ -326,7 +326,7 @@
 			})
 
 			$.ajax({
-				url:'http://api.zmiti.com/v2/h5/count_user',
+				url:'http://api.zmiti.com/v2/h5/count_hotword',
 				type:'post',
 				data:{
 					worksclassid:3

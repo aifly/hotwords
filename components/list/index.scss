@@ -9,10 +9,18 @@
 	}
 
 	.zmiti-words-list {
-		width: 10rem;
+		width: 9rem;
 		height: 9rem;
+		margin: 0 auto;
+		@include pos(r);
 		border: 1px solid red;
 		box-sizing: border-box;
+	}
+
+	.zmiti-word-item{
+		@include br();
+		text-align: center;
+		@include pos(a);
 	}
 
 	.zmiti-back {
