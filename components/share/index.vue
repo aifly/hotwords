@@ -72,6 +72,7 @@
 	import imgs from '../lib/assets.js';
 	import '../lib/html2canvas';
 	import $ from 'jquery';
+	import zmitiUtil from '../lib/util';
 	export default {
 		name:'zmitipage1',
 		props:['obserable'],
@@ -383,7 +384,7 @@
 			obserable.on('showShareApp',(data)=>{
 				this.show = true;
 				if(data){
-					this.createImg = data;
+					this.createImg = data.src;
 				}else{
 
 					this.html2img();

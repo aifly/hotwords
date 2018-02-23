@@ -24,7 +24,7 @@
 			</transition-group>
 		</ul>
 
-		<div class="zmiti-choose-btn" v-tap='entryForm'>
+		<div v-if='chooseWords.length>0' class="zmiti-choose-btn" v-tap='entryForm'>
 			<img :src="imgs.followBtn" alt="">
 		</div>
 	</div>

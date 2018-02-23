@@ -39,25 +39,25 @@ new Vue({
 	template: `<div>
 		<Index v-if='!isShare && show'  :obserable='obserable'></Index>
 		<Choose v-if='!isShare && show'  :obserable='obserable'></Choose>
-		<List v-if='!isShare && show'  :obserable='obserable'></List>
+		<List :obserable='obserable'></List>
 		<Form v-if='!isShare && show'  :obserable='obserable'></Form>
 		<Share :obserable='obserable'></Share>
 		<audio ref='audio' src='./assets/music/bg.mp3'  loop></audio>
 		<div hidden @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}' :style="playStyle">
 			<img  :src='imgs.play'/>
 		</div>
-		<!--
-			<div v-if='!loaded' :style='{background:"#fff url("+imgs.shareBg+") no-repeat center ",backgroundSize:"cover"}' class='zmiti-loading lt-full'>
-				<div class='zmiti-loading-ui'>
-					<div class='zmiti-loading-bar' >
-						<div :style="{width:width+'%'}">
-							<img :src='imgs.pos' />
-						</div>
-					</div>
-					<div class='zmiti-progress'>{{width}}%</div>
+		<div v-if='!loaded' hidden :style='{background:"#1a8cdc"}' class='zmiti-loading lt-full'>
+			<div class='zmiti-loading-ui'>
+				<div class='zmiti-loading-bar' >
+					<span></span>
+					<span></span>
+					<div class='zmiti-target'></div>
+					<span></span>
+					<span></span>
 				</div>
+				<div class='zmiti-progress'>{{width}}%</div>
 			</div>
-		-->
+		</div>
 	</div>`,
 	methods: {
 
