@@ -3,11 +3,14 @@ import Index from './components/index/index';
 import Choose from './components/choose/index';
 import Form from './components/form/index';
 import List from './components/list/index';
+import Share from './components/share/index';
 import Obserable from './components/lib/obserable';
 import imgs from './components/lib/assets'
 import zmitiUtil from './components/lib/util.js'
 import $ from 'jquery';
 import './components/lib/touch.js';
+
+
 var obserable = new Obserable();
 
 
@@ -38,8 +41,9 @@ new Vue({
 		<Choose v-if='!isShare && show'  :obserable='obserable'></Choose>
 		<List v-if='!isShare && show'  :obserable='obserable'></List>
 		<Form v-if='!isShare && show'  :obserable='obserable'></Form>
+		<Share :obserable='obserable'></Share>
 		<audio ref='audio' src='./assets/music/bg.mp3'  loop></audio>
-		<div  @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}' :style="playStyle">
+		<div hidden @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}' :style="playStyle">
 			<img  :src='imgs.play'/>
 		</div>
 		<!--
@@ -100,23 +104,19 @@ new Vue({
 		Index,
 		Choose,
 		Form,
-		List
+		List,
+		Share
 	},
 	mounted() {
 
 
-		var username = (zmitiUtil.getQueryString('nickname')),
-			src = (zmitiUtil.getQueryString('src')),
-			address = (zmitiUtil.getQueryString('address'));
+		var src = (zmitiUtil.getQueryString('src'));
 
-		this.isShare = (username && src && address);
+		this.isShare = src;
 
 		this.show = true;
 
-		this.username = decodeURI(username);
-		this.address = decodeURI(address);
 		this.src = src;
-
 
 
 		/*this.loading(arr, (s) => {
@@ -140,48 +140,42 @@ new Vue({
 			this.playStyle = data;
 
 		});
-
-		$(this.$refs['audio']).on('play', () => {
-			this.rotate = true;
-		}).on('pause', () => {
-			this.rotate = false;
-		});
-
-
-		return;
+		/*
+				$(this.$refs['audio']).on('play', () => {
+					this.rotate = true;
+				}).on('pause', () => {
+					this.rotate = false;
+				});
 
 
-		this.$refs['audio'].volume = .3;
-		this.$refs['audio'].play();
-		var s = this;
-		document.addEventListener("WeixinJSBridgeReady", function() {
-			WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
-				s.$refs['audio'].play();
-			});
-		}, false)
 
-		obserable.on('toggleBgMusic', (data) => {
-			this.$refs['audio'][data ? 'play' : 'pause']();
-		});
+
+				this.$refs['audio'].volume = .3;
+				this.$refs['audio'].play();
+				var s = this;
+				document.addEventListener("WeixinJSBridgeReady", function() {
+					WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+						s.$refs['audio'].play();
+					});
+				}, false)
+
+				obserable.on('toggleBgMusic', (data) => {
+					this.$refs['audio'][data ? 'play' : 'pause']();
+				});*/
 
 		this.updatePv();
-
 
 		if (this.isShare) {
 
 			obserable.trigger({
-				type: 'showSharePage',
+				type: 'showShareApp',
 				data: {
-					src,
-					username,
-					address,
+					src
 				}
 			})
-
-
 		} else {
 
-			zmitiUtil.getOauthurl();
+			//zmitiUtil.getOauthurl();
 			zmitiUtil.wxConfig(document.title, window.desc);
 		}
 	}

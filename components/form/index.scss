@@ -1,7 +1,14 @@
 @import "../css/base.scss";
 
 .zmiti-form-main-ui {
-	z-index: 104;
+	z-index: -1;
+	opacity: 0;
+	@include transition(1s opacity);
+
+	&.show {
+		z-index: 104;
+		opacity: 1;
+	}
 
 	.zmiti-info {
 		width: 6rem;

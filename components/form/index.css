@@ -34,7 +34,13 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 .zmiti-form-main-ui {
-  z-index: 104; }
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: 1s opacity;
+  transition: 1s opacity; }
+  .zmiti-form-main-ui.show {
+    z-index: 104;
+    opacity: 1; }
   .zmiti-form-main-ui .zmiti-info {
     width: 6rem;
     margin: .6rem 2rem 0 2rem; }

@@ -67,7 +67,7 @@
 				play:false,
 				showToastMsg:'',
 				index:-1,
-				show:true,
+				show:false,
 				words:[],
 				age:-1,
 				hotwordids:'',
@@ -282,6 +282,11 @@
 					this.toast('请选择省份');
 					return;	
 				}
+
+				var {obserable} = this;
+				obserable.trigger({
+					type:'showShareApp'
+				})
 				
 				return;
 				$.ajax({
@@ -313,27 +318,18 @@
 			
 			var {obserable} = this;
 
-			obserable.trigger({
-				type:'setPlay',
-				data:{
-					top:'.5rem !important'
-				}
-			});
+			/**/
+
+			obserable.on('showFormApp',()=>{
+				this.show = true;
+			})
 
 
 			obserable.on('setHotwordsid',(data)=>{
 				this.hotwordids = data;
 			})
 
-			$.ajax({
-				url:'http://api.zmiti.com/v2/h5/count_hotword',
-				type:'post',
-				data:{
-					worksclassid:3
-				}
-			}).done((data)=>{
-				console.log(data);
-			})
+			
 
 
 			

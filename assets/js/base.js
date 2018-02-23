@@ -12,6 +12,10 @@ var imgs = {
 	followBtn: './assets/images/follow-btn.png',
 	indexBg: './assets/images/index-bg.jpg',
 	national: './assets/images/national.png',
+	qrcode: './assets/images/qrcode.png',
+	evidence: './assets/images/evidence.png',
+	forecast: './assets/images/forecast.png',
+	wordBg: './assets/images/word-bg.png',
 
 
 }

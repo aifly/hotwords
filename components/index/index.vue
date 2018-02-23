@@ -1,5 +1,5 @@
 <template>
-	<div :style="{background:'url('+imgs.indexBg+') no-repeat center bottom',backgroundSize:'cover'}" class="zmiti-index-main-ui lt-full"  :class="{'show':show}">
+	<div v-tap='entryChoose' :style="{background:'url('+imgs.indexBg+') no-repeat center bottom',backgroundSize:'cover'}" class="zmiti-index-main-ui lt-full"  :class="{'show':show}">
 		<div class="zmiti-national">
 			<img :src="imgs.national" alt="">
 		</div>
@@ -42,11 +42,23 @@
 				showTitle:false,
 				viewW:window.innerWidth,
 				viewH:window.innerHeight,
-				words:[]
+				words:[],
+				start:true,
 
 			}
 		},
 		methods:{
+			entryChoose(){
+				var {obserable} = this;
+				obserable.trigger({
+					type:'showChooseApp',
+					data:this.words.concat([])
+				});
+				this.start = false;
+				setTimeout(()=>{
+					this.words.length = 0;
+				},1000)
+			},
 			r(m, n) {
 				return (m + Math.random() * (n - m));
 			},
@@ -77,7 +89,7 @@
 						life = this.r(20,30)|0;
 					}
 					iNow++;
-					window.webkitRequestAnimationFrame(render);
+					this.start && window.webkitRequestAnimationFrame(render);
 				}
 				window.webkitRequestAnimationFrame(render);
 			},
@@ -107,8 +119,9 @@
 			this.getHotwords();
 
 			setTimeout(()=>{
+				this.entryChoose();
 				this.showTitle = true;
-			},1100)
+			},100)
 		}
 	}
 </script>

@@ -4,29 +4,37 @@
 			<img :src="imgs.text" alt="">
 		</div>
 		<ul class="zmiti-choose-list">
-			<li v-for='(word,i) in chooseWords'>
-				{{word.hotword}}
-				<span @click="unchoose(i,word)"></span>
-			</li>
+			<transition-group name='zmiti-word-animate'  >
+				<li v-for='(word,i) in chooseWords' :key='word.hotword'>
+					{{word.hotword}}
+					<span @click="unchoose(i,word)"></span>
+				</li>
+				
+			</transition-group>
 		</ul>
 		<div class="zmiti-line">
 			
 		</div>
 
 		<ul class="zmiti-all-words">
-			<li v-for='(word,i) in words' @click='choose(i,word)'>
-				{{word.hotword}}
-			</li>
+			<transition-group name='zmiti-word-animate'  >
+				<li v-for='(word,i) in words' :key='word.hotword' @click='choose(i,word)' >
+					{{word.hotword}}
+				</li>
+			</transition-group>
 		</ul>
 
-		<div class="zmiti-choose-btn">
+		<div class="zmiti-choose-btn" v-tap='entryForm'>
 			<img :src="imgs.followBtn" alt="">
 		</div>
 	</div>
 </template>
 <script>
 	import './index.css';
+	import Vue from "vue";
 	import imgs from '../lib/assets.js';
+
+	//Vue.use(VueAnimatedList)
 	export default {
 		name:'zmitipage1',
 		props:['obserable'],
@@ -34,8 +42,7 @@
 			return {
 				imgs,
 				play:false,
-				index:-1,
-				show:true,
+				show:false,
 				words:[],
 				chooseWords:[]
 			}
@@ -55,6 +62,17 @@
 			unchoose(index,word){
 				this.chooseWords.splice(index,1);
 				this.words.splice(word.index,0,word);
+			},
+			entryForm(){
+				var {obserable} = this;
+				obserable.trigger({
+					type:'setShareWords',
+					data:this.chooseWords.concat([])
+				})
+				obserable.trigger({
+					type:'showFormApp'
+				});
+				
 			}
 		},
 		components:{
@@ -63,18 +81,32 @@
 			
 			var {obserable} = this;
 
-			obserable.trigger({
+		/*	obserable.trigger({
 				type:'setPlay',
 				data:{
 					top:'.5rem !important'
 				}
-			});
+			});*/
 
-			setTimeout(()=>{
+			obserable.on('showChooseApp',(data)=>{
+				this.words = data;
+				this.show = true;
+
+				setTimeout(()=>{
+					obserable.trigger({
+						type:'setPlay',
+						data:{
+							top:'.5rem !important'
+						}
+					});
+				},300)
+			})
+
+			/*setTimeout(()=>{
 
 				this.words = obserable.trigger({type:'getWords'})
 
-			},400)
+			},400)*/
 		}
 	}
 </script>
