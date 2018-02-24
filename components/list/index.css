@@ -37,9 +37,12 @@
   z-index: -1;
   opacity: 0;
   -webkit-transition: 1s opacity;
-  transition: 1s opacity; }
+  transition: 1s opacity;
+  display: none;
+  opacity: 0; }
   .zmiti-list-main-ui.show {
-    z-index: 107;
+    display: block;
+    z-index: 110;
     opacity: 1; }
   .zmiti-list-main-ui .zmiti-vote {
     width: 9rem;

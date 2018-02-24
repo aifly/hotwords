@@ -12,9 +12,12 @@ var imgs = {
 	followBtn: './assets/images/follow-btn.png',
 	indexBg: './assets/images/index-bg.jpg',
 	national: './assets/images/national.png',
-	qrcode: './assets/images/qrcode.png',
+	qrcode: './assets/images/qrcode1.png',
 	evidence: './assets/images/evidence.png',
 	forecast: './assets/images/forecast.png',
+	arrow: './assets/images/arrow.png',
+	loading: './assets/images/loading.gif',
+	loading1: './assets/images/loading.png',
 	wordBg: './assets/images/word-bg.png',
 
 

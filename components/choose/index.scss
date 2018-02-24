@@ -29,7 +29,9 @@
 			float: left;
 			background: #9ecf73;
 			text-align: center;
-			line-height: .8rem;
+			$height: 5vh;
+			height: $height;
+			line-height: $height;
 			width: 2.5rem;
 			@include br(4px);
 			border: 1px solid #ffff00;
@@ -37,7 +39,7 @@
 			@include pos(r);
 
 			&.zmiti-word-animate-enter-active, &.zmiti-word-animate-leave-active {
-				@include transition(.4s);
+				@include transition(.4s opacity);
 			}
 
 			&.zmiti-word-animate-enter {
@@ -46,7 +48,7 @@
 
 			&.zmiti-word-animate-leave-to {
 				opacity: 0;
-				//transform: translateY(-4rem);
+				//transform: translateY(-.1rem);
 			}
 
 			span {
@@ -98,11 +100,12 @@
 		@include pos(r);
 
 		li {
+			$height: 5vh;
 			@include transition(.4s);
 			overflow: hidden;
-			height: .8rem;
+			height: $height;
 			text-align: center;
-			line-height: .8rem;
+			line-height: $height;
 			width: 2.5rem;
 			float: left;
 			@include br(4px);

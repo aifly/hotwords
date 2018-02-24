@@ -48,7 +48,7 @@ img {
 
 	.zmiti-national {
 		width: 3rem;
-		@include pos(a);
+		@include pos(f);
 		right: .5rem;
 		top: .4rem;
 		z-index: 1002;
@@ -126,20 +126,21 @@ img {
 		-webkit-animation: move 5s linear infinite;
 	}
 
-	.zmiti-logo {
+	@at-root.zmiti-logo {
 		@include pos(a);
-		width: 3rem;
+		width: 14rem;
 		text-align: center;
-		bottom: 1rem;
-		left: 3.6rem;
+		bottom: .2rem;
+		left: 3rem;
+		z-index: 100;
 
 		img {
-			width: 1.4rem;
+			width: 3.6rem;
 			display: block;
 			margin: 0 auto .2rem;
 		}
 
-		font-size: 12px;
+		font-size: .76rem;
 		color: #fff;
 		@include transform(scale(0.8));
 	}
@@ -154,7 +155,7 @@ img {
 }
 
 .zmiti-mask {
-	@include pos(f);
+	@include pos(a);
 	left: 0;
 	top: 0;
 	width: 100%;
@@ -165,6 +166,9 @@ img {
 
 	img {
 		width: 6rem;
+		@include pos(a);
+		right: 0;
+		top: 0;
 	}
 
 }
@@ -176,91 +180,28 @@ img {
 		width: 6rem;
 		left: 2rem;
 		@include pos(a);
-		top: 4rem;
-		
-		.zmiti-loading-bar{
-			width: 2rem;
-			height: 1rem;
+		top: 6rem;
+
+		.zmiti-loading-bar {
+			width: 6rem;
+			//height: 1rem;
 			@include pos(r);
 			margin: 0 auto;
-			.zmiti-target{
-				$size:.4rem;
+
+			.zmiti-target {
+				$size: .4rem;
 				width: $size;
 				height: $size;
 				@include br();
-				background:#fff;
+				background: #fff;
 				left: 50%;
-				top:.4rem;
+				top: .4rem;
 				@include pos(a);
-				margin-left:-$size/2;
+				margin-left: -$size/2;
 				@include animation(scale linear 2s  infinite alternate);
 			}
 
-			span{
-				$size:.2rem;
-				@include br();
-				width: $size;
-				height: $size;
-				background:#fff;
-				top: .46rem;
-				@include pos(a);
-				&:nth-of-type(1){
-					@include animation(move1 linear 2s .5s  infinite);
-				}
-				&:nth-of-type(2){
-					@include animation(move1 linear 2s 1s  infinite);
-				}
-
-				&:nth-of-type(3){
-					left: 50%;
-					@include animation(move2 linear 2s 1.5s  infinite);
-				}
-				&:nth-of-type(4){
-					left: 50%;
-					@include animation(move2 linear 2s 2	s  infinite);
-				}
-			}
 		}
-
-	@-webkit-keyframes scale{
-		0%{
-			@include transform(scale(1));
-		}
-		20%{
-			@include transform(scale(1.2));
-		}
-		100%{
-			@include transform(scale(1.4));
-		}
-	}
-	
-	@-webkit-keyframes move1{
-		0%{
-			opacity:.5;
-		}
-		10%{
-			opacity:1;
-			@include transform(translate3d(.8rem,0,0));
-		}
-		100%{
-			opacity:1;
-			@include transform(translate3d(.8rem,0,0));
-		}
-	}
-	@-webkit-keyframes move2{
-		0%{
-			opacity:1;
-		}
-		10%{
-			opacity:0;
-			@include transform(translate3d(.8rem,0,0));
-		}
-		100%{
-			opacity:0;
-			@include transform(translate3d(.8rem,0,0));
-		}
-	}
-
 
 		.zmiti-progress {
 			margin-top: .5rem;

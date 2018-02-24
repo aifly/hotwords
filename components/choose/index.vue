@@ -27,6 +27,9 @@
 		<div v-if='chooseWords.length>0' class="zmiti-choose-btn" v-tap='entryForm'>
 			<img :src="imgs.followBtn" alt="">
 		</div>
+
+		<audio src='./assets/music/1.mp3' ref='audio1'></audio>
+		<audio src='./assets/music/2.mp3' ref='audio2'></audio>
 	</div>
 </template>
 <script>
@@ -55,6 +58,7 @@
 					hotwordid:word.hotwordid
 
 				});
+				this.$refs['audio1'].play();
 				//console.log(JSON.stringify(this.chooseWords))
 
 				this.words.splice(index,1);
@@ -62,6 +66,7 @@
 			unchoose(index,word){
 				this.chooseWords.splice(index,1);
 				this.words.splice(word.index,0,word);
+				this.$refs['audio2'].play();
 			},
 			entryForm(){
 				var {obserable} = this;
@@ -72,6 +77,24 @@
 				obserable.trigger({
 					type:'showFormApp'
 				});
+
+
+				var ids = '';
+				this.chooseWords.forEach((word,i)=>{
+					if(i<this.chooseWords.length-1){
+						ids += word.hotwordid+','
+					}
+					else{
+						ids += word.hotwordid;
+					}
+				});
+
+				
+
+				obserable.trigger({
+					type:'setHotwordsid',
+					data:ids
+				})
 				
 			}
 		},

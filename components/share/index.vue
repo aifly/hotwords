@@ -9,7 +9,7 @@
 			</div>
 		  </transition>
 		
-		<div v-if='words.length>10' class="zmiti-share-page1 lt-full" ref='zmiti-cache-page'>
+		<div v-if='words.length>10'  :style="{height:viewH*2+'px'}" class="zmiti-share-page1 lt-full" ref='zmiti-cache-page'>
 			<div class="zmiti-forecast">
 				<img :src="imgs.forecast" alt="">
 			</div>
@@ -23,6 +23,11 @@
 					<img :src="imgs.qrcode" alt="">
 				</div>
 
+				<div class="zmiti-logo">
+					<img :src="imgs.logo" alt="">
+					<span>新华社新媒体中心</span>
+				</div>
+
 				<div class="zmiti-evidence">
 					<img :src="imgs.evidence" alt="">
 				</div>
@@ -30,7 +35,7 @@
 			
 		</div>
 
-		<div v-if='words.length<=10' class="zmiti-share-page1 zmiti-share-page2 lt-full" ref='zmiti-cache-page1'>
+		<div v-if='words.length<=10' :style="{height:viewH*2+'px'}" class="zmiti-share-page1 zmiti-share-page2 lt-full" ref='zmiti-cache-page1'>
 			<div class="zmiti-forecast">
 				<img :src="imgs.forecast" alt="">
 			</div>
@@ -42,6 +47,11 @@
 			<div class="zmiti-word-bottom">
 				<div class="zmiti-qrcode">
 					<img :src="imgs.qrcode" alt="">
+				</div>
+
+				<div class="zmiti-logo">
+					<img :src="imgs.logo" alt="">
+					<span>新华社新媒体中心</span>
 				</div>
 
 				<div class="zmiti-evidence">
@@ -60,10 +70,18 @@
 		        <label>图片正在努力绘制中...</label>
 		</section>
 
-		<div v-if='showBtns' class="zmiti-share-btns">
+		<div v-if='showBtns && !src' class="zmiti-share-btns">
 			<div v-tap='restart'>重新预测</div>
 			<div v-tap='showList'>看大家的热词</div>
-			<div>分享</div>
+			<div v-tap='showMask'>分享</div>
+		</div>
+
+		<div v-if='showBtns && src' class="zmiti-share-btns zmiti-share-btns1">
+			<div v-tap='restart'>我也要预测</div>
+		</div>
+
+		<div v-if='showMasks' @touchstart='hideMask' class="zmiti-mask">
+			<img :src="imgs.arrow" alt="">
 		</div>
 	</div>
 </template>
@@ -81,162 +99,165 @@
 				imgs,
 				play:false,
 				show:false,
+				showMasks:false,
+				viewH:document.documentElement.clientHeight,
 				createImg:'',
 				showBtns:false,
+				src:'',
 				chooseHotword:[
 					{
 						text:'共享经济',
 						style:{
-							fontSize:'1.2rem',
-							top:'3rem',
-							left:'1.5rem'
+							fontSize:1.2*2+'rem',
+							top:3*2+'rem',
+							left:1.5*2+'rem'
 						}
 					},{
 						text:'十九大大',
 						style:{
-							fontSize:'.8rem',
-							top:'4.4rem',
-							left:'2.5rem'
+							fontSize:.8*2+'rem',
+							top:4.4*2+'rem',
+							left:2.5*2+'rem'
 						}
 					},{
 						text:'雄安新区',
 						style:{
-							fontSize:'.7rem',
-							top:'4.4rem',
-							left:'5.5rem',
+							fontSize:.7*2+'rem',
+							top:4.4*2+'rem',
+							left:5.8*2+'rem',
 						}
 					},{
 						text:'新时代',
 						style:{
-							fontSize:'.8rem',
-							top:'5rem',
-							left:'4.8rem',
+							fontSize:.8*2+'rem',
+							top:5*2+'rem',
+							left:4.8*2+'rem',
 							WebkitTransformOrigin:'left bottom',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'食品安全',
 						style:{
-							fontSize:'.8rem',
-							top:'5.1rem',
-							left:'3rem',
+							fontSize:.8*2+'rem',
+							top:5.1*2+'rem',
+							left:3*2+'rem',
 							WebkitTransformOrigin:'left bottom',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'医疗改革',
 						style:{
-							fontSize:'.7rem',
-							top:'4.6rem',
-							left:'2rem',
+							fontSize:.7*2+'rem',
+							top:4.6*2+'rem',
+							left:2*2+'rem',
 							WebkitTransformOrigin:'left bottom',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'租购并举',
 						style:{
-							fontSize:'.6rem',
-							top:'5.4rem',
-							left:'2.8rem',
+							fontSize:.6*2+'rem',
+							top:5.4*2+'rem',
+							left:2.8*2+'rem',
 						}
 					},{
 						text:'共同富裕',
 						style:{
-							fontSize:'.5rem',
-							top:'5.4rem',
-							left:'5.8rem',
+							fontSize:.5*2+'rem',
+							top:5.4*2+'rem',
+							left:5.8*2+'rem',
 						}
 					},{
 						text:'人工智能',
 						style:{
-							fontSize:'.6rem',
-							top:'2.3rem',
-							left:'3.2rem',
+							fontSize:.6*2+'rem',
+							top:2.3*2+'rem',
+							left:3.2*2+'rem',
 						}
 					},{
 						text:'四个全面',
 						style:{
-							fontSize:'.5rem',
-							top:'3rem',
-							left:'6.0rem',
+							fontSize:.5*2+'rem',
+							top:3*2+'rem',
+							left:6.0*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'拍虎打蝇',
 						style:{
-							fontSize:'.5rem',
-							top:'1.7rem',
-							left:'5.3rem',
+							fontSize:.5*2+'rem',
+							top:1.7*2+'rem',
+							left:5.3*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'共同富裕',
 						style:{
-							fontSize:'.5rem',
-							top:'1.4rem',
-							left:'3.3rem',
+							fontSize:.5*2+'rem',
+							top:1.4*2+'rem',
+							left:3.3*2+'rem',
 						}
 					},{
 						text:'共同富裕',
 						style:{
-							fontSize:'.5rem',
-							top:'1.8rem',
-							left:'1.8rem',
+							fontSize:.5*2+'rem',
+							top:1.8*2+'rem',
+							left:1.8*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'拍虎打蝇',
 						style:{
-							fontSize:'.5rem',
-							top:'4.4rem',
-							left:'.4rem',
+							fontSize:.5*2+'rem',
+							top:4.4*2+'rem',
+							left:.4*2+'rem',
 						}
 					},{
 						text:'拍虎打蝇',
 						style:{
-							fontSize:'.6rem',
-							top:'7.1rem',
-							left:'5.4rem',
+							fontSize:.6*2+'rem',
+							top:7.1*2+'rem',
+							left:5.4*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'共同富裕',
 						style:{
-							fontSize:'.7rem',
-							top:'6.1rem',
-							left:'.3rem',
+							fontSize:.7*2+'rem',
+							top:6.1*2+'rem',
+							left:.3*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'拍虎打蝇',
 						style:{
-							fontSize:'.4rem',
-							top:'5.7rem',
-							left:'.1rem',
+							fontSize:.4*2+'rem',
+							top:5.7*2+'rem',
+							left:.1*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					},{
 						text:'四个全面',
 						style:{
-							fontSize:'.4rem',
-							top:'5.9rem',
-							left:'7.4rem',
-							WebkitTransform:'rotate(90deg) scale(1.2)'
+							fontSize:.4*2+'rem',
+							top:5.9*2+'rem',
+							left:7.4*2+'rem',
+							WebkitTransform:'rotate(90deg) scale('+1.2*2+')'
 						}
 					},{
 						text:'十九大',
 						style:{
-							fontSize:'.4rem',
-							top:'4rem',
-							left:'7.4rem',
-							WebkitTransform:'scale(1.2)'
+							fontSize:.4*2+'rem',
+							top:4*2+'rem',
+							left:7.4*2+'rem',
+							WebkitTransform:'scale('+1.2*2+')'
 						}
 					},{
 						text:'教育质量',
 						style:{
-							fontSize:'.5rem',
-							top:'7rem',
-							left:'3.4rem',
+							fontSize:.5*2+'rem',
+							top:7*2+'rem',
+							left:3.4*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
 					}
@@ -245,72 +266,72 @@
 					{
 						text:'共享经济',
 						style:{
-							fontSize:'1.2rem',
-							top:'4rem',
-							left:'2.0rem'
+							fontSize:1.2*2+'rem',
+							top:4*2+'rem',
+							left:2.0*2+'rem'
 						}
 					},{
 						text:'食品安全',
 						style:{
-							fontSize:'.7rem',
-							top:'5.5rem',
-							left:'1.0rem'
+							fontSize:.7*2+'rem',
+							top:5.5*2+'rem',
+							left:1.0*2+'rem'
 						}
 					},{
 						text:'雄安新区',
 						style:{
-							fontSize:'.5rem',
-							top:'3rem',
-							left:'4.0rem'
+							fontSize:.5*2+'rem',
+							top:3*2+'rem',
+							left:4.0*2+'rem'
 						}
 					},{
 						text:'共同富裕',
 						style:{
-							fontSize:'.5rem',
-							top:'6.1rem',
-							left:'5.0rem'
+							fontSize:.5*2+'rem',
+							top:6.1*2+'rem',
+							left:5.0*2+'rem'
 						}
 					},{
 						text:'租购并举',
 						style:{
-							fontSize:'.4rem',
-							top:'5.1rem',
-							left:'7.0rem'
+							fontSize:.4*2+'rem',
+							top:5.1*2+'rem',
+							left:7.0*2+'rem'
 						}
 					},{
 						text:'人工智能',
 						style:{
-							fontSize:'.5rem',
-							top:'4.4rem',
-							left:'-.6rem'
+							fontSize:.5*2+'rem',
+							top:4.4*2+'rem',
+							left:-.6*2+'rem'
 						}
 					},{
 						text:'四个全面',
 						style:{
-							fontSize:'.4rem',
-							top:'3.4rem',
-							left:'6.6rem'
+							fontSize:.4*2+'rem',
+							top:3.4*2+'rem',
+							left:6.6*2+'rem'
 						}
 					},{
 						text:'拍虎打蝇',
 						style:{
-							fontSize:'.6rem',
-							top:'1.9rem',
-							left:'2.1rem'
+							fontSize:.6*2+'rem',
+							top:1.9*2+'rem',
+							left:2.1*2+'rem'
 						}
 					},{
 						text:'教育质量',
 						style:{
-							fontSize:'.4rem',
-							top:'7.4rem',
-							left:'4.1rem'
+							fontSize:.4*2+'rem',
+							top:7.4*2+'rem',
+							left:4.1*2+'rem'
 						}
 					},{
 						text:'新时代',
 						style:{
-							fontSize:'.5rem',
-							top:'2.9rem',
-							left:'1.1rem'
+							fontSize:.5*2+'rem',
+							top:2.9*2+'rem',
+							left:1.1*2+'rem'
 						}
 					}
 				],
@@ -318,6 +339,12 @@
 			}
 		},
 		methods:{
+			hideMask(){
+				this.showMasks = false;
+			},
+			showMask(){
+				this.showMasks = true;
+			},
 			restart(){
 				window.location.href = window.location.href.split('?')[0];
 			},
@@ -347,11 +374,11 @@
 					          type: 'post',
 					          data: {
 					            setcontents: url,
-					            setwidth: dom.clientWidth*2,
-					            setheight:dom.clientHeight*2
+					            setwidth: dom.clientWidth,
+					            setheight:dom.clientHeight
 					          },
 					          success: function(data) {
-					          	console.log(data);
+					          	//console.log(data);
 					            if (data.getret === 0) {
 					            	//s.deleteImg(dt.img);
 					              var src = data.getimageurl;
@@ -367,8 +394,8 @@
 					        })
 
 					      },
-					      width: dom.clientWidth*2,
-					      height:dom.clientHeight*2
+					      width: dom.clientWidth,
+					      height:dom.clientHeight
 					})
 				},1000)
 			}
@@ -377,16 +404,14 @@
 		},
 		mounted(){
 
-			
-
 			var {obserable} = this;
 
 			obserable.on('showShareApp',(data)=>{
 				this.show = true;
 				if(data){
 					this.createImg = data.src;
+					this.src = data.src;
 				}else{
-
 					this.html2img();
 				}
 			})

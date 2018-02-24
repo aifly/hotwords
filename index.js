@@ -36,27 +36,25 @@ new Vue({
 		}
 	},
 	el: '#app',
+	/*<audio ref='audio' src='./assets/music/bg.mp3'  loop></audio>*/
 	template: `<div>
 		<Index v-if='!isShare && show'  :obserable='obserable'></Index>
 		<Choose v-if='!isShare && show'  :obserable='obserable'></Choose>
 		<List :obserable='obserable'></List>
 		<Form v-if='!isShare && show'  :obserable='obserable'></Form>
 		<Share :obserable='obserable'></Share>
-		<audio ref='audio' src='./assets/music/bg.mp3'  loop></audio>
+		
 		<div hidden @click='toggleMusic' class='zmiti-play' :class='{"rotate":rotate}' :style="playStyle">
 			<img  :src='imgs.play'/>
 		</div>
-		<div v-if='!loaded' hidden :style='{background:"#1a8cdc"}' class='zmiti-loading lt-full'>
+		<div v-if='!loaded' :style='{background:"#158ae4"}' class='zmiti-loading lt-full'>
 			<div class='zmiti-loading-ui'>
 				<div class='zmiti-loading-bar' >
-					<span></span>
-					<span></span>
-					<div class='zmiti-target'></div>
-					<span></span>
-					<span></span>
+					<img :src="imgs.loading" alt="" />
 				</div>
 				<div class='zmiti-progress'>{{width}}%</div>
 			</div>
+			<img style='position:absolute;z-index:10;' :src="imgs.loading1" alt="" />
 		</div>
 	</div>`,
 	methods: {
@@ -94,7 +92,7 @@ new Vue({
 				url: window.protocol + '//api.zmiti.com/v2/custom/update_pvnum/',
 				type: 'post',
 				data: {
-					//isrand: 0,
+					isrand: 1,
 					customid: 39
 				}
 			});
@@ -119,7 +117,7 @@ new Vue({
 		this.src = src;
 
 
-		/*this.loading(arr, (s) => {
+		this.loading(arr, (s) => {
 			this.width = s * 100 | 0;
 
 		}, () => {
@@ -128,7 +126,7 @@ new Vue({
 			obserable.trigger({
 				type: 'titleShow'
 			})
-		})*/
+		})
 
 		obserable.on('showShare', () => {
 			this.showMask = true;

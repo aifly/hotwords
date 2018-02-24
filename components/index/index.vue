@@ -1,5 +1,5 @@
 <template>
-	<div v-tap='entryChoose' :style="{background:'url('+imgs.indexBg+') no-repeat center bottom',backgroundSize:'cover'}" class="zmiti-index-main-ui lt-full"  :class="{'show':show}">
+	<div v-swipe='entryChoose' v-tap='entryChoose' :style="{background:'url('+imgs.indexBg+') no-repeat center bottom',backgroundSize:'cover'}" class="zmiti-index-main-ui lt-full"  :class="{'show':show}">
 		<div class="zmiti-national">
 			<img :src="imgs.national" alt="">
 		</div>
@@ -17,13 +17,9 @@
 			<img :src="imgs.title2" alt="">
 		</div>
 
-		<div class="zmiti-logo">
-			<img :src="imgs.logo" alt="">
-			<span>新华社新媒体中心</span>
-		</div>
+		
 
-
-		<div v-for='(word,i) in words' class="zmiti-word" :style="{top:r(10,viewH-50)+'px',WebkitAnimationDuration:r(4,15)+'s',webkitFilter:'blur('+(i%3===0?'1px':0)+')',WebkitAnimationDelay:r(1,20)+'s'}" >{{word.hotword}}</div>
+		<div v-for='(word,i) in words' class="zmiti-word" :style="{top:r(10,viewH-50)+'px',WebkitAnimationDuration:r(4,15)+'s',webkitFilter:'blur('+(i%3===0?'1px':0)+')',WebkitAnimationDelay:i<10?'-1s':r(1,20)+'s'}" >{{word.hotword}}</div>
 	</div>
 </template>
 
@@ -50,10 +46,12 @@
 		methods:{
 			entryChoose(){
 				var {obserable} = this;
-				obserable.trigger({
-					type:'showChooseApp',
-					data:this.words.concat([])
-				});
+				setTimeout(()=>{
+					obserable.trigger({
+						type:'showChooseApp',
+						data:this.words.concat([])
+					});
+				},100)
 				this.start = false;
 				setTimeout(()=>{
 					this.words.length = 0;
@@ -99,7 +97,6 @@
 					type:'post'
 				}).done((data)=>{
 					if(data.getret === 0){
-						console.log(data.list);
 						this.words = data.list;
 
 						var {obserable} = this;
@@ -118,10 +115,9 @@
 
 			this.getHotwords();
 
-			setTimeout(()=>{
-				this.entryChoose();
+			obserable.on('titleShow',()=>{
 				this.showTitle = true;
-			},100)
+			})
 		}
 	}
 </script>

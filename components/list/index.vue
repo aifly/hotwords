@@ -36,6 +36,7 @@
 				play:false,
 				index:-1,
 				show:false,
+				viewH:document.documentElement.clientHeight,
 				hotWords:[],
 				words:[
 					{
