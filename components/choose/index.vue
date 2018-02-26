@@ -113,6 +113,7 @@
 
 			obserable.on('showChooseApp',(data)=>{
 				this.words = data;
+				
 				this.show = true;
 
 				setTimeout(()=>{

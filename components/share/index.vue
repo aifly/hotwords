@@ -260,6 +260,15 @@
 							left:3.4*2+'rem',
 							WebkitTransform:'rotate(90deg)'
 						}
+					},{
+						text:'教育质量无用的',
+						style:{
+							display:'none',
+							fontSize:.5*2+'rem',
+							top:7*2+'rem',
+							left:3.4*2+'rem',
+							WebkitTransform:'rotate(90deg)'
+						}
 					}
 				],
 				chooseHotword1:[

@@ -99,6 +99,8 @@
 					if(data.getret === 0){
 						this.words = data.list;
 
+						
+
 						var {obserable} = this;
 						obserable.on('getWords',()=>{
 							return this.words;
