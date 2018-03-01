@@ -9,7 +9,7 @@
 			<div ref='word' class="zmiti-word-item" v-for='(word,i) in words' :style='word.style'>
 				<div>
 					<div>{{hotWords[0] && hotWords[i].hotword}}</div>
-					<div>{{hotWords[0] && hotWords[i].num}}</div>
+					<div>{{hotWords[0] && hotWords[i].scale}}</div>
 				</div>
 			</div>
 
@@ -233,13 +233,23 @@
 						worksclassid:3
 					}
 				}).done((data)=>{
-					console.log(data);
+					var allCount =0;
+					data.list.map((ls)=>{
+						allCount += ls.num*1;
+					});
 
+					
+					data.list.forEach(data=>{
+						data.scale = (100*data.num / allCount).toFixed(1) +'%'
+					})
+					
 					if(data.getret === 0){
 						this.hotWords = data.list;
 					}
 				})
 			})
+
+			//obserable.trigger({type:'showHotwordsList'})
 
 			/**/
 			

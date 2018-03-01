@@ -80,6 +80,10 @@
 			<div v-tap='restart'>我也要预测</div>
 		</div>
 
+		<div v-if='showBtns && !src' class="zmiti-team-btn" v-tap='showTeam'>
+			制作团队
+		</div>
+
 		<div v-if='showMasks' @touchstart='hideMask' class="zmiti-mask">
 			<img :src="imgs.arrow" alt="">
 		</div>
@@ -348,6 +352,13 @@
 			}
 		},
 		methods:{
+			showTeam(){
+				var {obserable} = this;
+
+				obserable.trigger({
+					type:'showTeamApp'
+				});
+			},
 			hideMask(){
 				this.showMasks = false;
 			},

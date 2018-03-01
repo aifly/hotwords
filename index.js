@@ -4,6 +4,7 @@ import Choose from './components/choose/index';
 import Form from './components/form/index';
 import List from './components/list/index';
 import Share from './components/share/index';
+import Team from './components/team/index';
 import Obserable from './components/lib/obserable';
 import imgs from './components/lib/assets'
 import zmitiUtil from './components/lib/util.js'
@@ -40,7 +41,8 @@ new Vue({
 	template: `<div>
 		<Index v-if='!isShare && show'  :obserable='obserable'></Index>
 		<Choose v-if='!isShare && show'  :obserable='obserable'></Choose>
-		<List :obserable='obserable'></List>
+		<Team v-if='!isShare && show'  :obserable='obserable'></Team>
+		<List v-if='!isShare && show'  :obserable='obserable'></List>
 		<Form v-if='!isShare && show'  :obserable='obserable'></Form>
 		<Share :obserable='obserable'></Share>
 		
@@ -92,7 +94,7 @@ new Vue({
 				url: window.protocol + '//api.zmiti.com/v2/custom/update_pvnum/',
 				type: 'post',
 				data: {
-					isrand: 1,
+					isrand: window.israndPv ? 1 : 0,
 					customid: 39
 				}
 			});
@@ -103,7 +105,8 @@ new Vue({
 		Choose,
 		Form,
 		List,
-		Share
+		Share,
+		Team
 	},
 	mounted() {
 

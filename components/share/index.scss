@@ -125,6 +125,16 @@
 
 	}
 
+	.zmiti-team-btn {
+		@include pos(a);
+		bottom: .8rem;
+		left: 50%;
+		@include transform(translate3d(-50%, 0, 0));
+		text-decoration: underline;
+		color: #1a8cdc;
+		font-size: .45rem;
+	}
+
 	.zmiti-share-btns1 {
 		bottom: 1.0rem;
 	}
