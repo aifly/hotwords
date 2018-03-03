@@ -94,12 +94,13 @@
 			getHotwords(){
 				$.ajax({
 					url:window.protocol+'//api.zmiti.com/v2/h5/get_hotwordlist',
-					type:'post'
+					type:'post',
+					data:{
+						worksclassid:3
+					}
 				}).done((data)=>{
 					if(data.getret === 0){
 						this.words = data.list;
-
-						
 
 						var {obserable} = this;
 						obserable.on('getWords',()=>{
